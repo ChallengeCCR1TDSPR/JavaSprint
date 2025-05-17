@@ -1,67 +1,209 @@
-# aluno-web-quarkus
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+# Documentação da API - TecnoTrilho
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## Sumário
+- [Tecnico](#tecnico)
+  - [POST /tecnicos](#post-tecnicos)
+  - [GET /tecnicos](#get-tecnicos)
+  - [DELETE /tecnicos/{id}](#delete-tecnicosid)
+- [Estacao](#estacao)
+  - [POST /estacoes](#post-estacoes)
+  - [GET /estacoes](#get-estacoes)
+  - [DELETE /estacoes/{id}](#delete-estacoesid)
+- [Manutencao](#manutencao)
+  - [POST /manutencoes](#post-manutencoes)
+  - [GET /manutencoes](#get-manutencoes)
+  - [DELETE /manutencoes/{id}](#delete-manutencoesid)
 
-## Running the application in dev mode
+---
 
-You can run your application in dev mode that enables live coding using:
+## Tecnico
 
-```shell script
-./mvnw quarkus:dev
+### POST /tecnicos
+
+- **Descrição:** Insere um novo técnico no sistema.
+- **Request Body (JSON):**
+
+```json
+{
+  "idTecnico": 1,
+  "nomeTecnico": "João Silva",
+  "telefoneTecnico": "123456789",
+  "cargo": "Supervisor"
+}
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+- **Respostas:**
+  - 201 Created: `"Técnico cadastrado com sucesso!"`
+  - 500 Internal Server Error: Mensagem de erro detalhada.
 
-## Packaging and running the application
+---
 
-The application can be packaged using:
+### GET /tecnicos
 
-```shell script
-./mvnw package
+- **Descrição:** Retorna a lista de todos os técnicos cadastrados.
+- **Resposta:**
+
+```json
+[
+  {
+    "idTecnico": 1,
+    "nomeTecnico": "João Silva",
+    "telefoneTecnico": "123456789",
+    "cargo": "Supervisor"
+  },
+  {
+    "idTecnico": 2,
+    "nomeTecnico": "Maria Souza",
+    "telefoneTecnico": "987654321",
+    "cargo": "Técnico"
+  }
+]
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+- **Códigos de status:**
+  - 200 OK: Lista de técnicos retornada.
+  - 500 Internal Server Error: Caso ocorra erro no servidor.
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+---
 
-If you want to build an _über-jar_, execute the following command:
+### DELETE /tecnicos/{id}
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+- **Descrição:** Deleta o técnico com o ID especificado.
+- **Parâmetros:**
+  - `id` (path) - ID do técnico a ser deletado.
+- **Respostas:**
+  - 200 OK: `"Técnico deletado com sucesso!"`
+  - 404 Not Found: `"Técnico não encontrado para deletar."`
+  - 500 Internal Server Error: Mensagem de erro detalhada.
+
+---
+
+## Estacao
+
+### POST /estacoes
+
+- **Descrição:** Insere uma nova estação no sistema.
+- **Request Body (JSON):**
+
+```json
+{
+  "idEstacao": 1,
+  "nomeEstacao": "Estação Central",
+  "localEstacao": "São Paulo"
+}
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+- **Respostas:**
+  - 201 Created: `"Estação cadastrada com sucesso!"`
+  - 500 Internal Server Error: Mensagem de erro detalhada.
 
-## Creating a native executable
+---
 
-You can create a native executable using:
+### GET /estacoes
 
-```shell script
-./mvnw package -Dnative
+- **Descrição:** Retorna a lista de todas as estações cadastradas.
+- **Resposta:**
+
+```json
+[
+  {
+    "idEstacao": 1,
+    "nomeEstacao": "Estação Central",
+    "localEstacao": "São Paulo"
+  },
+  {
+    "idEstacao": 2,
+    "nomeEstacao": "Estação Sul",
+    "localEstacao": "Rio de Janeiro"
+  }
+]
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+- **Códigos de status:**
+  - 200 OK: Lista de estações retornada.
+  - 500 Internal Server Error: Caso ocorra erro no servidor.
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
+---
+
+### DELETE /estacoes/{id}
+
+- **Descrição:** Deleta a estação com o ID especificado.
+- **Parâmetros:**
+  - `id` (path) - ID da estação a ser deletada.
+- **Respostas:**
+  - 200 OK: `"Estação deletada com sucesso!"`
+  - 404 Not Found: `"Estação não encontrada para deletar."`
+  - 500 Internal Server Error: Mensagem de erro detalhada.
+
+---
+
+## Manutencao
+
+### POST /manutencoes
+
+- **Descrição:** Insere uma nova manutenção no sistema.
+- **Request Body (JSON):**
+
+```json
+{
+  "idManutencao": 1,
+  "dataManutencao": "2025-05-17",
+  "tipoManutencao": "Corretiva",
+  "descricaoManutencao": "Troca de peça X",
+  "tempoInativo": 120,
+  "causaFalha": "Falha mecânica"
+}
 ```
 
-You can then execute your native executable with: `./target/aluno-web-quarkus-1.0.0-SNAPSHOT-runner`
+- **Respostas:**
+  - 201 Created: `"Manutenção cadastrada com sucesso!"`
+  - 500 Internal Server Error: Mensagem de erro detalhada.
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+---
 
-## Related Guides
+### GET /manutencoes
 
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- JDBC Driver - Oracle ([guide](https://quarkus.io/guides/datasource)): Connect to the Oracle database via JDBC
+- **Descrição:** Retorna a lista de todas as manutenções registradas.
+- **Resposta:**
 
-## Provided Code
+```json
+[
+  {
+    "idManutencao": 1,
+    "dataManutencao": "2025-05-17",
+    "tipoManutencao": "Corretiva",
+    "descricaoManutencao": "Troca de peça X",
+    "tempoInativo": 120,
+    "causaFalha": "Falha mecânica"
+  },
+  {
+    "idManutencao": 2,
+    "dataManutencao": "2025-05-18",
+    "tipoManutencao": "Preventiva",
+    "descricaoManutencao": "Lubrificação",
+    "tempoInativo": 30,
+    "causaFalha": "Manutenção rotineira"
+  }
+]
+```
 
-### REST
+- **Códigos de status:**
+  - 200 OK: Lista de manutenções retornada.
+  - 500 Internal Server Error: Caso ocorra erro no servidor.
 
-Easily start your REST Web Services
+---
 
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+### DELETE /manutencoes/{id}
+
+- **Descrição:** Deleta a manutenção com o ID especificado.
+- **Parâmetros:**
+  - `id` (path) - ID da manutenção a ser deletada.
+- **Respostas:**
+  - 200 OK: `"Manutenção deletada com sucesso!"`
+  - 404 Not Found: `"Manutenção não encontrada para deletar."`
+  - 500 Internal Server Error: Mensagem de erro detalhada.
+
+---
+
+Se quiser, posso também montar o documento PDF ou te ajudar a gerar os prints e outros itens da sua Sprint 4, só falar!
