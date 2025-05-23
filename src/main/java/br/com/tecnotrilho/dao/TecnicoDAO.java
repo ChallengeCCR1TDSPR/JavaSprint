@@ -26,9 +26,11 @@ public class TecnicoDAO {
             stmt.execute();
             return "Técnico cadastrado com sucesso!";
         } catch (SQLException e) {
-            return "Erro ao cadastrar técnico: " + e.getMessage();
+            e.printStackTrace();  // imprime a stack trace completa no log
+            return "Erro ao cadastrar técnico: " + e.toString();  // inclui a classe do erro
         }
     }
+
 
     public List<Tecnico> listarTodos() {
         List<Tecnico> tecnicos = new ArrayList<>();

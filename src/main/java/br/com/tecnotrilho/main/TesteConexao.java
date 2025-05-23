@@ -1,6 +1,6 @@
-package br.com.fiap.main;
+package br.com.tecnotrilho.main;
 
-import br.com.fiap.conexoes.ConexaoFactory;
+import br.com.tecnotrilho.conexoes.ConexaoFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;

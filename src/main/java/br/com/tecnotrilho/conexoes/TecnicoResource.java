@@ -39,16 +39,18 @@ public class TecnicoResource {
         try {
             String resultado = tecnicoDAO.inserir(tecnico);
             if(resultado.startsWith("Erro")) {
+                System.err.println("Erro ao inserir técnico: " + resultado); // loga o erro completo
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                         .entity(resultado).build();
             }
             return Response.status(Response.Status.CREATED).entity(resultado).build();
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();  // mostra a stack trace completa
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Erro ao cadastrar técnico: " + e.getMessage()).build();
+                    .entity("Erro ao cadastrar técnico: " + e.toString()).build();
         }
     }
+
 
     @PUT
     @Path("/{id}")

@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +20,9 @@ public class ManutencaoDAO {
         String sql = "INSERT INTO t_fiap_manut (ID_MANUT, DT_MANUT, TIPO_MANUT, DS_MANUT, TEMPO_INATIVO, CAUSA_FALHA) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = this.minhaConexao.prepareStatement(sql)) {
+            LocalDate localDate = LocalDate.parse(manutencao.getDataManutencao());
             stmt.setInt(1, manutencao.getIdManutencao());
-            stmt.setString(2, manutencao.getDataManutencao());
+            stmt.setDate(2, java.sql.Date.valueOf(localDate));
             stmt.setString(3, manutencao.getTipoManutencao());
             stmt.setString(4, manutencao.getDescricaoManutencao());
             stmt.setInt(5, manutencao.getTempoInativo());
